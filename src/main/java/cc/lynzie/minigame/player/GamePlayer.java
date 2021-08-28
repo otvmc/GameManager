@@ -1,5 +1,6 @@
 package cc.lynzie.minigame.player;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -16,6 +17,10 @@ public abstract class GamePlayer {
   }
 
   public void sendMessage(String message) {
-    player.sendMessage(message);
+    player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+  }
+
+  public String getDisplayName() {
+    return player.getName();
   }
 }
