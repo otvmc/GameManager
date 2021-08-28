@@ -5,29 +5,19 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class ArenaConfig {
 
   private File file;
   private FileConfiguration config;
-  private Logger logger = LogManager.getLogManager().getLogger(getClass().getName());
+  private Logger logger = Bukkit.getLogger();
 
-  public void initialize() {
+  public void initialize(JavaPlugin plugin) {
     file = new File(Bukkit.getServer().getPluginManager().getPlugin("GameManager").getDataFolder(),
         "arena.yml");
-
-    if (!file.exists()) {
-      try {
-        file.createNewFile();
-        logger.info(
-            "Successfully created arena.yml! Make sure to edit it as per your arena setup!");
-      } catch (Exception ex) {
-        logger.warning("Couldn't create arena.yml! Are your permissions setup correctly?");
-      }
-    }
-
+    plugin.saveResource("arena.yml", false);
     config = YamlConfiguration.loadConfiguration(file);
   }
 
