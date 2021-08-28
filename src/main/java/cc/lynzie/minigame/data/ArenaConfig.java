@@ -10,40 +10,42 @@ import java.util.logging.Logger;
 
 public class ArenaConfig {
 
-    private File file;
-    private FileConfiguration config;
-    private Logger logger = LogManager.getLogManager().getLogger(getClass().getName());
+  private File file;
+  private FileConfiguration config;
+  private Logger logger = LogManager.getLogManager().getLogger(getClass().getName());
 
-    public void initialize() {
-        file = new File(Bukkit.getServer().getPluginManager().getPlugin("GameManager").getDataFolder(), "arena.yml");
+  public void initialize() {
+    file = new File(Bukkit.getServer().getPluginManager().getPlugin("GameManager").getDataFolder(),
+        "arena.yml");
 
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-                logger.info("Successfully created arena.yml! Make sure to edit it as per your arena setup!");
-            } catch (Exception ex) {
-                logger.warning("Couldn't create arena.yml! Are your permissions setup correctly?");
-            }
-        }
-
-        config = YamlConfiguration.loadConfiguration(file);
+    if (!file.exists()) {
+      try {
+        file.createNewFile();
+        logger.info(
+            "Successfully created arena.yml! Make sure to edit it as per your arena setup!");
+      } catch (Exception ex) {
+        logger.warning("Couldn't create arena.yml! Are your permissions setup correctly?");
+      }
     }
 
-    public void save() {
-        try {
-            config.save(file);
-            logger.info("Successfully saved arena.yml!");
-        } catch (Exception ex) {
-            logger.warning("Couldn't save arena.yml! Are your permissions setup correctly?");
-        }
-    }
+    config = YamlConfiguration.loadConfiguration(file);
+  }
 
-    public void reload() {
-        config = YamlConfiguration.loadConfiguration(file);
+  public void save() {
+    try {
+      config.save(file);
+      logger.info("Successfully saved arena.yml!");
+    } catch (Exception ex) {
+      logger.warning("Couldn't save arena.yml! Are your permissions setup correctly?");
     }
+  }
 
-    public FileConfiguration getConfig() {
-        return config;
-    }
+  public void reload() {
+    config = YamlConfiguration.loadConfiguration(file);
+  }
+
+  public FileConfiguration getConfig() {
+    return config;
+  }
 
 }

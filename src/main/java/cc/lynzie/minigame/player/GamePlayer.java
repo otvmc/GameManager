@@ -5,17 +5,17 @@ import org.bukkit.entity.Player;
 
 public abstract class GamePlayer {
 
-    private final Player player;
+  private final Player player;
 
-    protected GamePlayer(Player player) {
-        this.player = player;
-    }
+  protected GamePlayer(Player player) {
+    this.player = player;
+  }
 
-    public void teleportPlayer(Location location) {
-        player.teleport(location);
-    }
+  public void teleportPlayer(Location location) {
+    player.teleport(location);
+  }
 
-    public void sendMessage(String message) {
-        player.sendMessage(message);
-    }
+  public void sendMessage(String message) {
+    player.sendMessage(message);
+  }
 }
