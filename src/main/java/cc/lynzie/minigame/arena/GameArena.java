@@ -44,7 +44,7 @@ public class GameArena {
     this.config = gameManager.getArenaConfig();
     this.arenaName = arenaName;
     this.logger = LogManager.getLogger(String.format("Arena [%s]", arenaName));
-    this.stateManager = new StateManager(gameManager.getJavaPlugin(), this);
+    this.stateManager = new StateManager(this);
 
     initArena();
   }
@@ -60,9 +60,7 @@ public class GameArena {
     this.leaveMessage = config.getConfig()
         .getString(String.format("arenas.%s.players.leave-msg", arenaName));
     String[] preGameSpawnCoords = config.getConfig().getString(
-            String.format("arenas.%s.pre-game-spawn", arenaName))
-        .split(",");
-    System.out.println(preGameSpawnCoords);
+        String.format("arenas.%s.pre-game-spawn", arenaName)).split(",");
     this.preGameLocation = new Location(this.arenaWorld, Double.parseDouble(preGameSpawnCoords[0]),
         Double.parseDouble(preGameSpawnCoords[1]), Double.parseDouble(preGameSpawnCoords[2]));
 
@@ -108,8 +106,8 @@ public class GameArena {
   }
 
   /**
-   * Adds a new GameState to the arena, and sets it
-   * as the current one if there are no other ones.
+   * Adds a new GameState to the arena, and sets it as the current one if there are no other ones.
+   *
    * @param gameState The GameState to add.
    */
   public void addGameState(GameState gameState) {

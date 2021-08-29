@@ -8,11 +8,9 @@ import org.bukkit.scheduler.BukkitTask;
 
 public class StateManager {
 
-  private final JavaPlugin javaPlugin;
   private final GameArena gameArena;
 
-  public StateManager(JavaPlugin javaPlugin, GameArena gameArena) {
-    this.javaPlugin = javaPlugin;
+  public StateManager(GameArena gameArena) {
     this.gameArena = gameArena;
   }
 

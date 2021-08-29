@@ -45,7 +45,7 @@ public class GameManager {
       if (arena.isAllowingNewPlayers()) return arena;
     }
 
-    return createArena("test");
+    return createArena();
   }
 
   public GameArena findArenaByPlayer(Player player) {
