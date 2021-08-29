@@ -15,7 +15,7 @@ public class ArenaConfig {
   private Logger logger = Bukkit.getLogger();
 
   public void initialize(JavaPlugin plugin) {
-    file = new File(Bukkit.getServer().getPluginManager().getPlugin("GameManager").getDataFolder(),
+    file = new File(Bukkit.getServer().getPluginManager().getPlugin(plugin.getName()).getDataFolder(),
         "arena.yml");
     plugin.saveResource("arena.yml", false);
     config = YamlConfiguration.loadConfiguration(file);

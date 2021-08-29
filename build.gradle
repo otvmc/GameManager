@@ -1,5 +1,7 @@
 plugins {
+    id 'com.github.johnrengelman.shadow' version '7.0.0'
     id 'java'
+    id 'maven-publish'
 }
 
 group 'cc.lynzie'
@@ -7,13 +9,34 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    maven { url = "https://repo.aikar.co/content/groups/aikar/" }
     maven { url "https://papermc.io/repo/repository/maven-public/" }
+}
+
+compileJava {
+    options.compilerArgs += ["-parameters"]
+    options.fork = true
+    options.forkOptions.executable = 'javac'
 }
 
 dependencies {
     compileOnly "io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT"
+    implementation "co.aikar:acf-paper:0.5.0-SNAPSHOT"
+}
+
+shadowJar {
+    relocate 'co.aikar.commands', 'cc.lynzie.minigame.acf'
+    relocate 'co.aikar.locale', 'cc.lynzie.minigame.acf.locales'
 }
 
 test {
     useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        library(MavenPublication) {
+            from components.java
+        }
+    }
 }
