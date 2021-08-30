@@ -197,6 +197,10 @@ public class GameArena {
     return allowNewPlayers;
   }
 
+  public void setAllowNewPlayers(boolean allowNewPlayers) {
+    this.allowNewPlayers = allowNewPlayers;
+  }
+
   public List<GameState> getGameStates() {
     return gameStates;
   }
