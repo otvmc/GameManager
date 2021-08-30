@@ -32,6 +32,10 @@ public abstract class GamePlayer {
     player.sendMessage(message);
   }
 
+  public void sendActionBar(Component text) {
+    getPlayer().sendActionBar(text);
+  }
+
   public String getDisplayName() {
     return player.getName();
   }
