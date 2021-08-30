@@ -30,8 +30,12 @@ public abstract class GameState implements Listener {
     startTime = Instant.now();
     javaPlugin.getServer().getPluginManager().registerEvents(this, javaPlugin);
 
-    // Perform the tasks the user has specified.
-    stateStart();
+    try {
+      // Perform the tasks the user has specified.
+      stateStart();
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    }
   }
 
   public void end() {
@@ -39,8 +43,13 @@ public abstract class GameState implements Listener {
 
     HandlerList.unregisterAll(this);
     arena.getGameStates().remove(this);
-    // Perform the tasks the user has specified.
-    stateEnd();
+
+    try {
+      // Perform the tasks the user has specified.
+      stateEnd();
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    }
   }
 
   public void update() {
