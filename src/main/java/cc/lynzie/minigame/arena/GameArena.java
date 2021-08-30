@@ -68,8 +68,8 @@ public class GameArena {
         .getStringList(String.format("arenas.%s.spawns", arenaName))) {
       String[] coords = spawn.split(",");
       this.playerSpawns.add(
-          new Location(arenaWorld, Double.parseDouble(coords[0]), Double.parseDouble(coords[0]),
-              Double.parseDouble(coords[0])));
+          new Location(arenaWorld, Double.parseDouble(coords[0]), Double.parseDouble(coords[1]),
+              Double.parseDouble(coords[2])));
     }
 
     // Set the StateManager to go off every 20 seconds.
