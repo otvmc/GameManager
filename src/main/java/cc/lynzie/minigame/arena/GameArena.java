@@ -127,6 +127,10 @@ public class GameArena {
     }
   }
 
+  public List<GamePlayer> getActivePlayers() {
+    return activePlayers;
+  }
+
   public void sendMessage(String msg) {
     for (GamePlayer player : players) {
       player.sendMessage(msg);
