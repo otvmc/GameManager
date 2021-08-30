@@ -97,7 +97,7 @@ public class GameArena {
 
     // Teleport the player to the pre-game arena.
     gamePlayer.teleportPlayer(preGameLocation);
-    this.allowNewPlayers = maxPlayers < players.size();
+    this.allowNewPlayers = maxPlayers > players.size();
   }
 
   /**
