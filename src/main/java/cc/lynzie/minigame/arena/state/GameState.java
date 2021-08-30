@@ -64,6 +64,8 @@ public abstract class GameState implements Listener {
   }
 
   public void update() {
+    if (!started) start();
+
     // If the state is ready to end and an admin hasn't frozen it
     // in place then proceed to ending the state
     if (isAbleToEnd() && !frozen) {
