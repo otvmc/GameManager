@@ -34,7 +34,7 @@ public abstract class GamePlayer {
     return player.getName();
   }
 
-  private Player getPlayer() {
+  protected Player getPlayer() {
     return player;
   }
 
