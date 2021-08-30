@@ -124,6 +124,10 @@ public class GameArena {
     }
   }
 
+  public GameManager getGameManager() {
+    return gameManager;
+  }
+
   public StateManager getStateManager() {
     return stateManager;
   }
