@@ -22,7 +22,7 @@ public class StateManager {
     GameState currentGameState = gameArena.getCurrentGameState();
 
     // If the state has ended, switch it over to the next one and start it.
-    if (currentGameState.isEnded()) {
+    if (currentGameState.isEnded() && !gameArena.getGameStates().isEmpty()) {
       gameArena.setCurrentGameState(gameArena.getGameStates().get(0));
       currentGameState = gameArena.getCurrentGameState();
       currentGameState.start();
