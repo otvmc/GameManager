@@ -12,14 +12,25 @@ import org.bukkit.plugin.java.JavaPlugin;
 public abstract class GameState implements Listener {
 
   public GameState(JavaPlugin javaPlugin, GameArena gameArena) {
+    this(javaPlugin, gameArena, Duration.ofHours(1));
+  }
+
+  public GameState(JavaPlugin javaPlugin, GameArena gameArena, Duration duration) {
+    this(javaPlugin, gameArena, duration, "Event");
+  }
+
+  public GameState(JavaPlugin javaPlugin, GameArena gameArena, Duration duration, String friendlyName) {
     this.javaPlugin = javaPlugin;
     this.arena = gameArena;
+    this.stateDuration = duration;
+    this.friendlyName = friendlyName;
   }
 
   private JavaPlugin javaPlugin;
   private GameArena arena;
   private Instant startTime;
   private Duration stateDuration;
+  private String friendlyName;
   private boolean started;
   private boolean ended;
   private boolean frozen;
@@ -105,6 +116,14 @@ public abstract class GameState implements Listener {
 
   public Duration getStateDuration() {
     return stateDuration;
+  }
+
+  public String getFriendlyName() {
+    return friendlyName;
+  }
+
+  public void setFriendlyName(String friendlyName) {
+    this.friendlyName = friendlyName;
   }
 
   public Duration getRemaining() {
