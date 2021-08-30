@@ -102,6 +102,7 @@ public class GameArena {
     gamePlayer.teleportPlayer(preGameLocation);
     gamePlayer.onJoin();
 
+    gamePlayer.setArena(this);
     this.allowNewPlayers = maxPlayers > players.size();
   }
 
