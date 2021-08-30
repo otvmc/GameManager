@@ -67,7 +67,7 @@ public class GameArena {
     for (String spawn : config.getConfig()
         .getStringList(String.format("arenas.%s.spawns", arenaName))) {
       String[] coords = spawn.split(",");
-      playerSpawns.add(
+      this.playerSpawns.add(
           new Location(arenaWorld, Double.parseDouble(coords[0]), Double.parseDouble(coords[0]),
               Double.parseDouble(coords[0])));
     }
@@ -90,6 +90,7 @@ public class GameArena {
 
     // Add the player to our list and send a message welcoming them.
     players.add(gamePlayer);
+    this.gameManager.addPlayer(gamePlayer);
     sendMessage(joinMessage.replace("{player}", gamePlayer.getDisplayName())
         .replace("{cur}", "" + players.size())
         .replace("{max}", "" + maxPlayers));
@@ -97,12 +98,6 @@ public class GameArena {
     // Teleport the player to the pre-game arena.
     gamePlayer.teleportPlayer(preGameLocation);
     this.allowNewPlayers = maxPlayers < players.size();
-
-    // Start the first GameState if it hasn't already been started.
-    GameState gameState = gameStates.get(0);
-    if (!gameState.isStarted()) {
-      gameState.start();
-    }
   }
 
   /**

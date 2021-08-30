@@ -7,6 +7,7 @@ import cc.lynzie.minigame.player.GamePlayer;
 import co.aikar.commands.PaperCommandManager;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -14,6 +15,8 @@ public class GameManager {
 
   private JavaPlugin javaPlugin;
   private PaperCommandManager commandManager;
+
+  private Map<UUID, GamePlayer> gamePlayersByUuid = new HashMap<>();
   private Map<Integer, GameArena> arenas = new HashMap<>();
 
   private ArenaConfig arenaConfig = new ArenaConfig();
@@ -42,7 +45,9 @@ public class GameManager {
 
   public GameArena getOpenArena() {
     for (GameArena arena : arenas.values()) {
-      if (arena.isAllowingNewPlayers()) return arena;
+      if (arena.isAllowingNewPlayers()) {
+        return arena;
+      }
     }
 
     return createArena();
@@ -51,11 +56,25 @@ public class GameManager {
   public GameArena findArenaByPlayer(Player player) {
     for (GameArena arena : arenas.values()) {
       for (GamePlayer arenaPlayer : arena.getPlayers()) {
-        if (arenaPlayer.getUniqueId() == player.getUniqueId()) return arena;
+        if (arenaPlayer.getUniqueId() == player.getUniqueId()) {
+          return arena;
+        }
       }
     }
 
     return null;
+  }
+
+  public GamePlayer getPlayer(UUID uuid) {
+    return gamePlayersByUuid.get(uuid);
+  }
+
+  public GamePlayer getPlayer(Player player) {
+    return gamePlayersByUuid.get(player.getUniqueId());
+  }
+
+  public void addPlayer(GamePlayer gamePlayer) {
+    gamePlayersByUuid.putIfAbsent(gamePlayer.getUniqueId(), gamePlayer);
   }
 
   public JavaPlugin getJavaPlugin() {
