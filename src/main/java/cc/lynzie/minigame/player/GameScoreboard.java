@@ -40,9 +40,12 @@ public class GameScoreboard {
         // Create a blank team that uses a random ChatColor as its
         // name, since that'll show as blank once applied in-game.
         String teamId = ChatColor.values()[index].toString();
-        Team team = scoreboard.registerNewTeam(teamId);
-        team.displayName(Component.empty());
-        team.addEntry(teamId);
+        if (scoreboard.getTeam(teamId) == null) {
+          Team team = scoreboard.registerNewTeam(teamId);
+          team.displayName(Component.empty());
+          team.addEntry(teamId);
+          scoreboardTeams.add(team);
+        }
 
         objective.getScore(teamId).setScore(score);
       }
