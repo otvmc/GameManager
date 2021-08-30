@@ -7,6 +7,7 @@ import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.Subcommand;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.entity.Player;
 
 @CommandAlias("state|game state")
@@ -27,6 +28,8 @@ public class StateCommand extends BaseCommand {
       return;
     }
 
+    player.sendMessage(Component.text("Skipping " + arena.getCurrentGameState().getClass().getSimpleName())
+        .decorate(TextDecoration.ITALIC).color(TextColor.color(80, 80, 80)));
     arena.getCurrentGameState().end();
   }
 

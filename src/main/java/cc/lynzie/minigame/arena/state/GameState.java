@@ -14,7 +14,6 @@ public abstract class GameState implements Listener {
   public GameState(JavaPlugin javaPlugin, GameArena gameArena) {
     this.javaPlugin = javaPlugin;
     this.arena = gameArena;
-    javaPlugin.getServer().getPluginManager().registerEvents(this, javaPlugin);
   }
 
   private JavaPlugin javaPlugin;
@@ -29,6 +28,7 @@ public abstract class GameState implements Listener {
     // Set the start info for the state.
     started = true;
     startTime = Instant.now();
+    javaPlugin.getServer().getPluginManager().registerEvents(this, javaPlugin);
 
     // Perform the tasks the user has specified.
     stateStart();
