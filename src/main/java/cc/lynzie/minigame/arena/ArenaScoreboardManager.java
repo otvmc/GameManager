@@ -36,6 +36,7 @@ public class ArenaScoreboardManager {
     // Create our GameScoreboard, provide it our lines and put it into the list.
     GameScoreboard gameScoreboard = new GameScoreboard(scoreboard, gameBoard,
         lines);
+    Bukkit.getPlayer(player.getUniqueId()).setScoreboard(scoreboard);
     scoreboardsForPlayer.put(player.getUniqueId(), gameScoreboard);
 
     return gameScoreboard;
