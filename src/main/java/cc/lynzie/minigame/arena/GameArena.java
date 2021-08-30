@@ -5,6 +5,7 @@ import cc.lynzie.minigame.arena.state.GameState;
 import cc.lynzie.minigame.arena.state.StateManager;
 import cc.lynzie.minigame.data.ArenaConfig;
 import cc.lynzie.minigame.player.GamePlayer;
+import cc.lynzie.minigame.player.GameScoreboardLines;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.apache.logging.log4j.LogManager;
@@ -30,6 +31,8 @@ public class GameArena {
 
   // Information for the current game
   private GameManager gameManager;
+  private ArenaScoreboardManager scoreboardManager;
+  private GameScoreboardLines scoreboard;
   private final StateManager stateManager;
   private boolean allowNewPlayers = true;
   private GameState currentGameState;
@@ -46,6 +49,7 @@ public class GameArena {
     this.arenaName = arenaName;
     this.logger = LogManager.getLogger(String.format("Arena [%s]", arenaName));
     this.stateManager = new StateManager(this);
+    this.scoreboardManager = new ArenaScoreboardManager(gameManager);
 
     initArena();
   }
@@ -73,7 +77,7 @@ public class GameArena {
               Double.parseDouble(coords[2])));
     }
 
-    // Set the StateManager to go off every 20 seconds.
+    // Set the StateManager to go off every second.
     this.gameManager.getJavaPlugin().getServer().getScheduler()
         .runTaskTimer(this.gameManager.getJavaPlugin(),
             this.stateManager::performUpdate, 0L, 20L);
@@ -92,6 +96,7 @@ public class GameArena {
     // Add the player to our list and send a message welcoming them.
     players.add(gamePlayer);
     activePlayers.add(gamePlayer);
+    scoreboardManager.createBoardForPlayer(gamePlayer, scoreboard);
 
     this.gameManager.addPlayer(gamePlayer);
     sendMessage(joinMessage.replace("{player}", gamePlayer.getDisplayName())
@@ -146,8 +151,20 @@ public class GameArena {
     }
   }
 
+  public ArenaScoreboardManager getScoreboardManager() {
+    return scoreboardManager;
+  }
+
   public GameManager getGameManager() {
     return gameManager;
+  }
+
+  public GameScoreboardLines getScoreboard() {
+    return scoreboard;
+  }
+
+  public void setScoreboard(GameScoreboardLines scoreboard) {
+    this.scoreboard = scoreboard;
   }
 
   public StateManager getStateManager() {

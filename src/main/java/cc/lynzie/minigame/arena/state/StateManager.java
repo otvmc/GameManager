@@ -32,8 +32,10 @@ public class StateManager {
     }
 
     if (currentGameState.stateUpdate() == null) return;
+
     try {
       currentGameState.update();
+      gameArena.getScoreboardManager().updateBoards();
     } catch (Exception ex) {
       logger.warn("There was an exception while handling the state {}! Please notify the author of {}, and let them know:",
           currentGameState.getClass().getSimpleName(), gameArena.getGameManager().getJavaPlugin().getName(), ex);
