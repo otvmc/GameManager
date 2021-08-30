@@ -91,6 +91,8 @@ public class GameArena {
 
     // Add the player to our list and send a message welcoming them.
     players.add(gamePlayer);
+    activePlayers.add(gamePlayer);
+
     this.gameManager.addPlayer(gamePlayer);
     sendMessage(joinMessage.replace("{player}", gamePlayer.getDisplayName())
         .replace("{cur}", "" + players.size())
