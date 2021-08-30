@@ -38,6 +38,7 @@ public class GameArena {
   private World arenaWorld;
   private List<Location> playerSpawns = new ArrayList<>();
   private List<GamePlayer> players = new ArrayList<>();
+  private List<GamePlayer> activePlayers = new ArrayList<>();
 
   public GameArena(GameManager gameManager, String arenaName) {
     this.gameManager = gameManager;
@@ -97,7 +98,21 @@ public class GameArena {
 
     // Teleport the player to the pre-game arena.
     gamePlayer.teleportPlayer(preGameLocation);
+    gamePlayer.onJoin();
+
     this.allowNewPlayers = maxPlayers > players.size();
+  }
+
+  public void removePlayer(GamePlayer gamePlayer) {
+    players.remove(gamePlayer);
+
+    sendMessage(leaveMessage.replace("{player}", gamePlayer.getDisplayName())
+        .replace("{cur}", "" + players.size())
+        .replace("{max}", "" + maxPlayers));
+  }
+
+  public void removeActivePlayer(GamePlayer player) {
+    activePlayers.remove(player);
   }
 
   /**

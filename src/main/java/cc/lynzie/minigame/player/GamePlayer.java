@@ -33,4 +33,13 @@ public abstract class GamePlayer {
   public String getDisplayName() {
     return player.getName();
   }
+
+  private Player getPlayer() {
+    return player;
+  }
+
+  public abstract void onJoin();
+
+  public abstract void onLeave();
+
 }
