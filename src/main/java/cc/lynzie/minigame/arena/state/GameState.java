@@ -5,6 +5,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -129,6 +130,10 @@ public abstract class GameState implements Listener {
   }
 
   public Duration getRemaining() {
+    if (startTime == null) {
+      return Duration.of(99, ChronoUnit.SECONDS);
+    }
+
     // Calculate how long is left on the state, by getting the duration between
     // now and the start time, then subtracting the max duration.
     Duration startToNow = Duration.between(startTime, Instant.now());
