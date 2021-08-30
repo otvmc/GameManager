@@ -5,6 +5,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -36,6 +37,7 @@ public abstract class GameState implements Listener {
   public void end() {
     ended = true;
 
+    HandlerList.unregisterAll(this);
     arena.getGameStates().remove(this);
     // Perform the tasks the user has specified.
     stateEnd();
