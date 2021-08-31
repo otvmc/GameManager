@@ -33,7 +33,7 @@ public class GameScoreboard {
     List<Component> lines = this.lines.getLines(gamePlayer);
 
     if (scoreboardTeams.isEmpty()) {
-      for (int i = 0; i < 15; i++) {
+      for (int i = 0; i < lines.size(); i++) {
         int index = scoreboardTeams.size();
         int score = 15 - index;
 
