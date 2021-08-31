@@ -113,6 +113,7 @@ public class GameArena {
 
   public void removePlayer(GamePlayer gamePlayer) {
     players.remove(gamePlayer);
+    activePlayers.remove(gamePlayer);
 
     sendMessage(leaveMessage.replace("{player}", gamePlayer.getDisplayName())
         .replace("{cur}", "" + players.size())

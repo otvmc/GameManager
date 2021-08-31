@@ -1,12 +1,8 @@
 package cc.lynzie.minigame.arena.state;
 
-import cc.lynzie.minigame.GameManager;
 import cc.lynzie.minigame.arena.GameArena;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitTask;
 
 public class StateManager {
 
