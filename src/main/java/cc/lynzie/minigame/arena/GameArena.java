@@ -136,6 +136,22 @@ public class GameArena {
     }
   }
 
+  /**
+   * Loops through all the GameStates setup for this arena, if there's
+   * one that hasn't ended, yet it will be returned.
+   *
+   * @return The next GameState to happen.
+   */
+  public GameState getNextState() {
+    for (GameState gameState : gameStates) {
+      if (!gameState.isEnded()) {
+        return gameState;
+      }
+    }
+
+    return null;
+  }
+
   public List<GamePlayer> getActivePlayers() {
     return activePlayers;
   }

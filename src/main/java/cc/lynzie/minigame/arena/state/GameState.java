@@ -55,7 +55,6 @@ public abstract class GameState implements Listener {
     ended = true;
 
     HandlerList.unregisterAll(this);
-    arena.getGameStates().remove(this);
 
     try {
       // Perform the tasks the user has specified.
