@@ -1,11 +1,15 @@
+global:
+  backups: true
+
 arenas:
   test:
     map: world
     players:
       min: 1
-      max: 2
-      join-msg: '%7[&a+&7] &e{player}&7, (&e{cur}&7/&e{max}&7)'
-      leave-msg: '%7[&c-&7] &e{player}&7, (&e{cur}&7/&e{max}&7)'
+      max: 3
+      join-msg: '&7[&a+&7] &e{player}&7 (&e{cur}&7/&e{max}&7)'
+      leave-msg: '&7[&c-&7] &e{player}&7 (&e{cur}&7/&e{max}&7)'
+    pre-game-spawn: "5, 64, 5"
     spawns:
       - "0,64,0"
       - "1,64,1"
