@@ -64,6 +64,12 @@ public abstract class GameState implements Listener {
     }
   }
 
+  public void restart() {
+    ended = false;
+
+    start();
+  }
+
   public void update() {
     if (!started) {
       start();
