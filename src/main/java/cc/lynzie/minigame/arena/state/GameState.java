@@ -73,7 +73,12 @@ public abstract class GameState implements Listener {
       return;
     }
 
-    javaPlugin.getServer().getScheduler().runTask(javaPlugin, stateUpdate());
+    try {
+      // Perform the tasks the user has specified.
+      stateUpdate();
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    }
   }
 
   public boolean isAbleToEnd() {
@@ -84,7 +89,7 @@ public abstract class GameState implements Listener {
 
   public abstract void stateStart();
 
-  public abstract Runnable stateUpdate();
+  public abstract void stateUpdate();
 
   public abstract void stateEnd();
 

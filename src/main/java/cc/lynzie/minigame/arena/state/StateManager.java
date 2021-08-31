@@ -27,8 +27,6 @@ public class StateManager {
       currentGameState.start();
     }
 
-    if (currentGameState.stateUpdate() == null) return;
-
     try {
       currentGameState.update();
       gameArena.getScoreboardManager().updateBoards();
