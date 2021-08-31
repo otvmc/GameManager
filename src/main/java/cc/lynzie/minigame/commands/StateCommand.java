@@ -42,7 +42,7 @@ public class StateCommand extends BaseCommand {
       return;
     }
 
-    arena.getCurrentGameState().setFrozen(true);
+    arena.getCurrentGameState().setFrozen(!arena.getCurrentGameState().isFrozen());
   }
 
 }
