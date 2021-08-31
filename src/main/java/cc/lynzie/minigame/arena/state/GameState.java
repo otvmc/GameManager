@@ -65,7 +65,9 @@ public abstract class GameState implements Listener {
   }
 
   public void update() {
-    if (!started) start();
+    if (!started) {
+      start();
+    }
 
     // If the state is ready to end and an admin hasn't frozen it
     // in place then proceed to ending the state
@@ -131,7 +133,7 @@ public abstract class GameState implements Listener {
 
   public Duration getRemaining() {
     if (startTime == null) {
-      return Duration.of(99, ChronoUnit.SECONDS);
+      startTime = Instant.now();
     }
 
     // Calculate how long is left on the state, by getting the duration between
