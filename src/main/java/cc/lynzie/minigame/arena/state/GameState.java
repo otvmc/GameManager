@@ -32,6 +32,7 @@ public abstract class GameState implements Listener {
   private boolean started;
   private boolean ended;
   private boolean frozen;
+  private boolean skipped;
 
   public void start() {
     // Set the start info for the state.
@@ -48,6 +49,9 @@ public abstract class GameState implements Listener {
   }
 
   public void end() {
+    // If frozen don't end.
+    if (frozen) return;
+
     ended = true;
 
     HandlerList.unregisterAll(this);
@@ -68,7 +72,7 @@ public abstract class GameState implements Listener {
 
     // If the state is ready to end and an admin hasn't frozen it
     // in place then proceed to ending the state
-    if (isAbleToEnd() && !frozen) {
+    if (isAbleToEnd() || skipped) {
       end();
       return;
     }
@@ -159,6 +163,10 @@ public abstract class GameState implements Listener {
   public int[] getRemainingTime() {
     Duration remaining = getRemaining();
     return new int[]{remaining.toMinutesPart(), remaining.toSecondsPart()};
+  }
+
+  public void skip() {
+    this.skipped = true;
   }
 
 }

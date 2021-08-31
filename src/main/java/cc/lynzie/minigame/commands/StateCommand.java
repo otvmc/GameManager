@@ -29,8 +29,8 @@ public class StateCommand extends BaseCommand {
     }
 
     player.sendMessage(Component.text("Skipping " + arena.getCurrentGameState().getClass().getSimpleName())
-        .decorate(TextDecoration.ITALIC).color(TextColor.color(80, 80, 80)));
-    arena.getCurrentGameState().end();
+        .decorate(TextDecoration.ITALIC).color(TextColor.color(245, 245, 245)));
+    arena.getCurrentGameState().skip();
   }
 
   @Subcommand("freeze")
