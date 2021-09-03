@@ -15,6 +15,46 @@ abstract class GameState(gameManager: GameManager, val duration: Duration, val f
     lateinit var startTime: Instant
         private set
 
+    fun start() {
+        if (started || ended) return
+
+        started = true
+        startTime = Instant.now()
+
+        try {
+            onStart()
+        } catch (ex: Throwable) {
+            throw StateException("Error while starting state ${javaClass.simpleName}", ex)
+        }
+    }
+
+    fun tick() {
+        if (!started || ended) return
+
+        if (isAbleToEnd()) {
+            end()
+            return
+        }
+
+        try {
+            onTick()
+        } catch (ex: Throwable) {
+            throw StateException("Error while ticking state ${javaClass.simpleName}", ex)
+        }
+    }
+
+    fun end() {
+        if (!started || ended) return
+
+        ended = true
+
+        try {
+            onEnd()
+        } catch (ex: Throwable) {
+            throw StateException("Error while ending state ${javaClass.simpleName}", ex)
+        }
+    }
+
     /**
      * Checks whether the [GameState] can end, ensuring
      * that the state is not [frozen], and that the time
