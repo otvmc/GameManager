@@ -2,6 +2,7 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '7.0.0'
     id 'java'
     id 'maven-publish'
+    id 'org.jetbrains.kotlin.jvm' version '1.5.30'
 }
 
 group 'cc.lynzie'
@@ -10,7 +11,7 @@ version '1.0-SNAPSHOT'
 repositories {
     mavenCentral()
     maven { url = "https://repo.aikar.co/content/groups/aikar/" }
-    maven { url "https://papermc.io/repo/repository/maven-public/" }
+    maven { url = "https://papermc.io/repo/repository/maven-public/" }
 }
 
 compileJava {
@@ -20,6 +21,10 @@ compileJava {
 }
 
 dependencies {
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.21'
+    implementation 'com.sksamuel.hoplite:hoplite-core:1.4.7'
+    implementation 'com.sksamuel.hoplite:hoplite-toml:1.4.7'
+
     compileOnly "io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT"
     implementation "co.aikar:acf-paper:0.5.0-SNAPSHOT"
 }
@@ -38,5 +43,15 @@ publishing {
         library(MavenPublication) {
             from components.java
         }
+    }
+}
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }
