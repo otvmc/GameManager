@@ -1,16 +1,21 @@
 package cc.lynzie.gamemanager.state
 
 import cc.lynzie.gamemanager.GameManager
+import org.bukkit.event.HandlerList
 import org.bukkit.event.Listener
+import org.bukkit.scheduler.BukkitTask
 import java.time.Duration
 import java.time.Instant
 
-abstract class GameState(gameManager: GameManager, val duration: Duration, val friendlyName: String) : Listener {
+abstract class GameState(val gameManager: GameManager, val duration: Duration, val friendlyName: String) : Listener {
     var started = false
         private set
     var ended = false
         private set
     var frozen = false
+
+    var listeners = mutableSetOf<Listener>()
+    var tasks = mutableSetOf<BukkitTask>()
 
     lateinit var startTime: Instant
         private set
@@ -20,6 +25,7 @@ abstract class GameState(gameManager: GameManager, val duration: Duration, val f
 
         started = true
         startTime = Instant.now()
+        registerListener(this)
 
         try {
             onStart()
@@ -48,11 +54,26 @@ abstract class GameState(gameManager: GameManager, val duration: Duration, val f
 
         ended = true
 
+        listeners.forEach { HandlerList.unregisterAll() }
+        listeners.clear()
+        tasks.forEach { it.cancel() }
+        tasks.clear()
+
         try {
             onEnd()
         } catch (ex: Throwable) {
             throw StateException("Error while ending state ${javaClass.simpleName}", ex)
         }
+    }
+
+    /**
+     * Registers a [Listener], adding it to our [listeners]
+     * set, as well as registering it on the server - registering
+     * it this way makes it be unregistered during [end].
+     */
+    fun registerListener(listener: Listener) {
+        listeners.add(listener)
+        gameManager.plugin.server.pluginManager.registerEvents(listener, gameManager.plugin)
     }
 
     /**
