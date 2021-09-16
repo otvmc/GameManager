@@ -19,8 +19,7 @@ import java.util.List;
 public class GameArena {
 
   // Basic configuration options.
-  private String arenaName;
-  private String mapName;
+  private String name;
   private Location gameLocation;
   private int minPlayers;
   private int maxPlayers;
@@ -41,11 +40,11 @@ public class GameArena {
 
   public GameArena(GameManager gameManager, Location gameLocation, int minPlayers, int maxPlayers) {
     this.gameManager = gameManager;
-    this.arenaName = gameLocation.getWorld().getName();
-    this.mapName = arenaName;
+    this.name = gameLocation.getWorld().getName();
+    this.gameLocation = getGameLocation();
     this.minPlayers = minPlayers;
     this.maxPlayers = maxPlayers;
-    this.logger = LogManager.getLogger(String.format("Arena [%s]", arenaName));
+    this.logger = LogManager.getLogger(String.format("Arena [%s]", name));
     this.stateManager = new StateManager(this);
     this.scoreboardManager = new ArenaScoreboardManager(gameManager);
 
@@ -53,7 +52,7 @@ public class GameArena {
   }
 
   public void initArena() {
-    this.arenaWorld = Bukkit.getWorld(mapName);
+    this.arenaWorld = gameLocation.getWorld();
 
     // Set the StateManager to go off every second.
     this.gameManager.getJavaPlugin().getServer().getScheduler()
@@ -175,11 +174,7 @@ public class GameArena {
   }
 
   public String getArenaName() {
-    return arenaName;
-  }
-
-  public String getMapName() {
-    return mapName;
+    return name;
   }
 
   public Location getGameLocation() {

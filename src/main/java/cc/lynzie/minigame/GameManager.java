@@ -48,6 +48,15 @@ public class GameManager {
     return createArena();
   }*/
 
+  public GameArena getArenaByName(String name) {
+    for (GameArena arena : arenas.values()) {
+      if (arena.getArenaName().equalsIgnoreCase(name)) {
+        return arena;
+      }
+    }
+    return null;
+  }
+
   public GameArena findArenaByPlayer(Player player) {
     for (GameArena arena : arenas.values()) {
       for (GamePlayer arenaPlayer : arena.getPlayers()) {
