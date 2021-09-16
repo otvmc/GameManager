@@ -2,12 +2,12 @@ package cc.lynzie.minigame;
 
 import cc.lynzie.minigame.arena.GameArena;
 import cc.lynzie.minigame.commands.StateCommand;
-import cc.lynzie.minigame.data.ArenaConfig;
 import cc.lynzie.minigame.player.GamePlayer;
 import co.aikar.commands.PaperCommandManager;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -19,26 +19,21 @@ public class GameManager {
   private Map<UUID, GamePlayer> gamePlayersByUuid = new HashMap<>();
   private Map<Integer, GameArena> arenas = new HashMap<>();
 
-  private ArenaConfig arenaConfig = new ArenaConfig();
-
   public GameManager(JavaPlugin javaPlugin) {
     this.javaPlugin = javaPlugin;
     this.commandManager = new PaperCommandManager(javaPlugin);
 
     // Register our commands.
     commandManager.registerCommand(new StateCommand(this));
-
-    // Initialize our config file(s), so we can use them later on.
-    arenaConfig.initialize(javaPlugin);
   }
 
-  public GameArena createArena(String map) {
-    GameArena arena = new GameArena(this, map);
+  public GameArena createArena(Location gameArena, int minPlayers, int maxPlayers) {
+    GameArena arena = new GameArena(this, gameArena, minPlayers, maxPlayers);
     arenas.put(arenas.size() + 1, arena);
     return arena;
   }
 
-  public GameArena createArena() {
+  /*public GameArena createArena() {
     // TODO: Pick random map.
     return createArena("test");
   }
@@ -51,7 +46,7 @@ public class GameManager {
     }
 
     return createArena();
-  }
+  }*/
 
   public GameArena findArenaByPlayer(Player player) {
     for (GameArena arena : arenas.values()) {
@@ -81,7 +76,4 @@ public class GameManager {
     return javaPlugin;
   }
 
-  public ArenaConfig getArenaConfig() {
-    return arenaConfig;
-  }
 }

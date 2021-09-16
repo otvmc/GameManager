@@ -3,7 +3,6 @@ package cc.lynzie.minigame.arena;
 import cc.lynzie.minigame.GameManager;
 import cc.lynzie.minigame.arena.state.GameState;
 import cc.lynzie.minigame.arena.state.StateManager;
-import cc.lynzie.minigame.data.ArenaConfig;
 import cc.lynzie.minigame.player.GamePlayer;
 import cc.lynzie.minigame.player.GameScoreboardLines;
 import net.kyori.adventure.text.Component;
@@ -20,12 +19,9 @@ import java.util.List;
 public class GameArena {
 
   // Basic configuration options.
-  private final ArenaConfig config;
   private String arenaName;
   private String mapName;
-  private String joinMessage;
-  private String leaveMessage;
-  private Location preGameLocation;
+  private Location gameLocation;
   private int minPlayers;
   private int maxPlayers;
 
@@ -43,10 +39,12 @@ public class GameArena {
   private List<GamePlayer> players = new ArrayList<>();
   private List<GamePlayer> activePlayers = new ArrayList<>();
 
-  public GameArena(GameManager gameManager, String arenaName) {
+  public GameArena(GameManager gameManager, Location gameLocation, int minPlayers, int maxPlayers) {
     this.gameManager = gameManager;
-    this.config = gameManager.getArenaConfig();
-    this.arenaName = arenaName;
+    this.arenaName = gameLocation.getWorld().getName();
+    this.mapName = arenaName;
+    this.minPlayers = minPlayers;
+    this.maxPlayers = maxPlayers;
     this.logger = LogManager.getLogger(String.format("Arena [%s]", arenaName));
     this.stateManager = new StateManager(this);
     this.scoreboardManager = new ArenaScoreboardManager(gameManager);
@@ -55,27 +53,7 @@ public class GameArena {
   }
 
   public void initArena() {
-    this.mapName = config.getConfig().getString(String.format("arenas.%s.map", arenaName));
     this.arenaWorld = Bukkit.getWorld(mapName);
-
-    this.minPlayers = config.getConfig().getInt(String.format("arenas.%s.players.min", arenaName));
-    this.maxPlayers = config.getConfig().getInt(String.format("arenas.%s.players.max", arenaName));
-    this.joinMessage = config.getConfig()
-        .getString(String.format("arenas.%s.players.join-msg", arenaName));
-    this.leaveMessage = config.getConfig()
-        .getString(String.format("arenas.%s.players.leave-msg", arenaName));
-    String[] preGameSpawnCoords = config.getConfig().getString(
-        String.format("arenas.%s.pre-game-spawn", arenaName)).split(",");
-    this.preGameLocation = new Location(this.arenaWorld, Double.parseDouble(preGameSpawnCoords[0]),
-        Double.parseDouble(preGameSpawnCoords[1]), Double.parseDouble(preGameSpawnCoords[2]));
-
-    for (String spawn : config.getConfig()
-        .getStringList(String.format("arenas.%s.spawns", arenaName))) {
-      String[] coords = spawn.split(",");
-      this.playerSpawns.add(
-          new Location(arenaWorld, Double.parseDouble(coords[0]), Double.parseDouble(coords[1]),
-              Double.parseDouble(coords[2])));
-    }
 
     // Set the StateManager to go off every second.
     this.gameManager.getJavaPlugin().getServer().getScheduler()
@@ -99,12 +77,12 @@ public class GameArena {
     scoreboardManager.createBoardForPlayer(gamePlayer, scoreboard);
 
     this.gameManager.addPlayer(gamePlayer);
-    sendMessage(joinMessage.replace("{player}", gamePlayer.getDisplayName())
+    /*sendMessage(joinMessage.replace("{player}", gamePlayer.getDisplayName())
         .replace("{cur}", "" + players.size())
-        .replace("{max}", "" + maxPlayers));
+        .replace("{max}", "" + maxPlayers));*/
 
     // Teleport the player to the pre-game arena.
-    gamePlayer.teleportPlayer(preGameLocation);
+    gamePlayer.teleportPlayer(gameLocation);
     gamePlayer.onJoin();
 
     gamePlayer.setArena(this);
@@ -115,9 +93,9 @@ public class GameArena {
     players.remove(gamePlayer);
     activePlayers.remove(gamePlayer);
 
-    sendMessage(leaveMessage.replace("{player}", gamePlayer.getDisplayName())
+    /*sendMessage(leaveMessage.replace("{player}", gamePlayer.getDisplayName())
         .replace("{cur}", "" + players.size())
-        .replace("{max}", "" + maxPlayers));
+        .replace("{max}", "" + maxPlayers));*/
   }
 
   public void removeActivePlayer(GamePlayer player) {
@@ -196,10 +174,6 @@ public class GameArena {
     this.currentGameState = currentGameState;
   }
 
-  public ArenaConfig getConfig() {
-    return config;
-  }
-
   public String getArenaName() {
     return arenaName;
   }
@@ -208,16 +182,8 @@ public class GameArena {
     return mapName;
   }
 
-  public String getJoinMessage() {
-    return joinMessage;
-  }
-
-  public String getLeaveMessage() {
-    return leaveMessage;
-  }
-
-  public Location getPreGameLocation() {
-    return preGameLocation;
+  public Location getGameLocation() {
+    return gameLocation;
   }
 
   public int getMinPlayers() {
