@@ -3,6 +3,7 @@ package cc.lynzie.minigame.player;
 import cc.lynzie.minigame.arena.GameArena;
 import java.util.UUID;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -21,11 +22,11 @@ public abstract class GamePlayer {
   }
 
   public void teleportPlayer(Location location) {
-    player.teleport(location);
+    player.teleportAsync(location);
   }
 
   public void sendMessage(String message) {
-    player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+    player.sendMessage(LegacyComponentSerializer.legacyAmpersand().deserialize(message));
   }
 
   public void sendMessage(Component message) {

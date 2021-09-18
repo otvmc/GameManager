@@ -41,7 +41,7 @@ public class GameArena {
   public GameArena(GameManager gameManager, Location gameLocation, int minPlayers, int maxPlayers) {
     this.gameManager = gameManager;
     this.name = gameLocation.getWorld().getName();
-    this.gameLocation = getGameLocation();
+    this.gameLocation = gameLocation;
     this.minPlayers = minPlayers;
     this.maxPlayers = maxPlayers;
     this.logger = LogManager.getLogger(String.format("Arena [%s]", name));
