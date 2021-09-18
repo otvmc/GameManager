@@ -44,7 +44,7 @@ public abstract class GamePlayer {
     this.arena = gameArena;
   }
 
-  protected Player getPlayer() {
+  public Player getPlayer() {
     return player;
   }
 
