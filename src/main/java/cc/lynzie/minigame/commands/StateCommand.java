@@ -10,7 +10,7 @@ import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.entity.Player;
 
-@CommandAlias("state|game state")
+@CommandAlias("state|game|gamestate")
 public class StateCommand extends BaseCommand {
 
   private static GameManager gameManager;

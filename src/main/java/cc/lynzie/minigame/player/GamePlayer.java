@@ -7,6 +7,7 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerTeleportEvent;
 
 public abstract class GamePlayer {
 
@@ -23,6 +24,10 @@ public abstract class GamePlayer {
 
   public void teleportPlayer(Location location) {
     player.teleportAsync(location);
+  }
+
+  public void teleportPlayer(Location location, PlayerTeleportEvent.TeleportCause cause) {
+    player.teleportAsync(location, cause);
   }
 
   public void sendMessage(String message) {
