@@ -47,7 +47,7 @@ public class GameScoreboard {
 
     // Go through and set all of our lines.
     for (int i = 0; i < lines.size(); i++) {
-      scoreboardTeams.get(i).prefix(lines.get(i));
+      if (scoreboardTeams.get(i) != null) scoreboardTeams.get(i).prefix(lines.get(i));
     }
   }
 
